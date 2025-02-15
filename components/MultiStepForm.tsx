@@ -65,9 +65,9 @@ export default function MultiStepForm() {
 
   return (
     <FormProvider {...methods}>
-      <div className="space-y-16">
-        <div className="text-center space-y-3">
-          <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+      <div className="space-y-8 md:space-y-16 px-4 md:px-0">
+        <div className="text-center space-y-3 pt-14 md:pt-0">
+          <h1 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
             Join Our Team
           </h1>
           <p className="text-gray-600 dark:text-gray-300 text-lg">
@@ -83,7 +83,7 @@ export default function MultiStepForm() {
           />
         </div>
 
-        <div className="relative backdrop-blur-2xl bg-white/20 dark:bg-black/5 border border-gray-200/50 dark:border-white/5 rounded-3xl p-8 md:p-10 shadow-xl">
+        <div className="relative backdrop-blur-2xl bg-white/20 dark:bg-black/5 border border-gray-200/50 dark:border-white/5 rounded-3xl p-6 md:p-10 shadow-xl">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 dark:from-purple-500/5 dark:via-transparent dark:to-blue-500/5 rounded-3xl" />
           <div className="absolute inset-0 bg-white/40 dark:bg-black/0 backdrop-blur-xl rounded-3xl" />
           <form
@@ -103,12 +103,12 @@ export default function MultiStepForm() {
               </motion.div>
             </AnimatePresence>
 
-            <div className="flex justify-between pt-6">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-0 sm:justify-between pt-6">
               <button
                 type="button"
                 onClick={prevStep}
                 disabled={currentStep === 0 || isSubmitting}
-                className="form-button-outline"
+                className="form-button-outline w-full sm:w-auto"
               >
                 ← Previous
               </button>
@@ -117,7 +117,7 @@ export default function MultiStepForm() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="form-button"
+                  className="form-button w-full sm:w-auto"
                 >
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">
@@ -148,7 +148,7 @@ export default function MultiStepForm() {
                   type="button"
                   onClick={nextStep}
                   disabled={isSubmitting}
-                  className="form-button"
+                  className="form-button w-full sm:w-auto"
                 >
                   Next →
                 </button>

@@ -34,7 +34,7 @@ export default function StepIndicator({
   return (
     <div className="relative">
       {/* Progress bar */}
-      <div className="absolute top-5 left-0 right-0 h-0.5 bg-gray-200 dark:bg-gray-700">
+      <div className="absolute top-5 left-0 right-0 h-0.5 bg-gray-400 dark:bg-gray-700">
         <motion.div
           className="absolute left-0 top-0 h-full bg-gradient-to-r from-purple-500 to-blue-500"
           initial={{ width: 0 }}
@@ -81,7 +81,7 @@ export default function StepIndicator({
                     ${
                       isCurrent
                         ? "text-purple-500 dark:text-purple-400"
-                        : "text-gray-400 dark:text-gray-500"
+                        : "text-gray-500 dark:text-gray-500"
                     }
                   `}
                   >
@@ -122,7 +122,7 @@ export default function StepIndicator({
                       ? "text-purple-600 dark:text-purple-400"
                       : isCompleted
                       ? "text-green-600 dark:text-green-400"
-                      : "text-gray-400 dark:text-gray-500"
+                      : "text-gray-500 dark:text-gray-500"
                   }
                 `}
               >
