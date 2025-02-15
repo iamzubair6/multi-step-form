@@ -8,8 +8,6 @@ import StepIndicator from "./StepIndicator";
 import AccountInfo from "./steps/AccountInfo";
 import AddressInfo from "./steps/AddressInfo";
 import PersonalInfo from "./steps/PersonalInfo";
-import { Button } from "./ui/button";
-import { Card } from "./ui/card";
 
 const formSchema = z
   .object({
@@ -51,13 +49,6 @@ const steps = [
   { title: "Address Info", component: AddressInfo },
   { title: "Account Setup", component: AccountInfo },
 ];
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -20 },
-  transition: { duration: 0.3 },
-};
 
 export default function MultiStepForm() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -126,12 +117,12 @@ export default function MultiStepForm() {
 
   return (
     <FormProvider {...methods}>
-      <div className="space-y-8">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+      <div className="space-y-12">
+        <div className="text-center space-y-3">
+          <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
             Join Our Team
           </h1>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-gray-600 dark:text-gray-300 text-lg">
             Complete the form below to start your journey with us
           </p>
         </div>
@@ -142,46 +133,79 @@ export default function MultiStepForm() {
           progress={progress}
         />
 
-        <Card className="p-6 md:p-8 shadow-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
-          <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="relative backdrop-blur-2xl bg-white/20 dark:bg-black/5 border border-gray-200/50 dark:border-white/5 rounded-3xl p-8 md:p-10 shadow-xl">
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 dark:from-purple-500/5 dark:via-transparent dark:to-blue-500/5 rounded-3xl" />
+          <div className="absolute inset-0 bg-white/40 dark:bg-black/0 backdrop-blur-xl rounded-3xl" />
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className="space-y-10 relative"
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentStep}
-                {...fadeInUp}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
                 className="min-h-[400px]"
               >
                 <CurrentStepComponent />
               </motion.div>
             </AnimatePresence>
 
-            <div className="flex justify-between pt-4">
-              <Button
+            <div className="flex justify-between pt-6">
+              <button
                 type="button"
-                variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 0 || isSubmitting}
-                className="w-28"
+                className="form-button-outline"
               >
-                Previous
-              </Button>
+                ← Previous
+              </button>
 
               {currentStep === steps.length - 1 ? (
-                <Button type="submit" disabled={isSubmitting} className="w-28">
-                  {isSubmitting ? "Submitting..." : "Submit"}
-                </Button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="form-button"
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center gap-2">
+                      <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                          fill="none"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                      Submitting...
+                    </span>
+                  ) : (
+                    "Complete →"
+                  )}
+                </button>
               ) : (
-                <Button
+                <button
                   type="button"
                   onClick={nextStep}
                   disabled={isSubmitting}
-                  className="w-28"
+                  className="form-button"
                 >
-                  Next
-                </Button>
+                  Next →
+                </button>
               )}
             </div>
           </form>
-        </Card>
+        </div>
       </div>
     </FormProvider>
   );
