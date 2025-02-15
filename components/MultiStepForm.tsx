@@ -1,55 +1,62 @@
-import { useState } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
-import { motion, AnimatePresence } from 'framer-motion';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import PersonalInfo from './steps/PersonalInfo';
-import AddressInfo from './steps/AddressInfo';
-import AccountInfo from './steps/AccountInfo';
-import StepIndicator from './StepIndicator';
-import { Button } from './ui/button';
-import { Card } from './ui/card';
+"use client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import * as z from "zod";
+import StepIndicator from "./StepIndicator";
+import AccountInfo from "./steps/AccountInfo";
+import AddressInfo from "./steps/AddressInfo";
+import PersonalInfo from "./steps/PersonalInfo";
+import { Button } from "./ui/button";
+import { Card } from "./ui/card";
 
-const formSchema = z.object({
-  // Personal Information
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  email: z.string().email('Invalid email address'),
-  dateOfBirth: z.string().min(1, 'Date of birth is required'),
+const formSchema = z
+  .object({
+    // Personal Information
+    name: z.string().min(2, "Name must be at least 2 characters"),
+    email: z.string().email("Invalid email address"),
+    dateOfBirth: z.string().min(1, "Date of birth is required"),
 
-  // Address Information
-  addressLine1: z.string().min(1, 'Address is required'),
-  addressLine2: z.string().optional(),
-  city: z.string().min(1, 'City is required'),
-  state: z.string().min(1, 'State is required'),
-  zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, 'Invalid zip code'),
+    // Address Information
+    addressLine1: z.string().min(1, "Address is required"),
+    addressLine2: z.string().optional(),
+    city: z.string().min(1, "City is required"),
+    state: z.string().min(1, "State is required"),
+    zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, "Invalid zip code"),
 
-  // Account Information
-  username: z.string().min(4, 'Username must be at least 4 characters'),
-  password: z.string()
-    .min(8, 'Password must be at least 8 characters')
-    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
-    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-    .regex(/[0-9]/, 'Password must contain at least one number')
-    .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character'),
-  confirmPassword: z.string()
-}).refine((data) => data.password === data.confirmPassword, {
-  message: "Passwords don't match",
-  path: ["confirmPassword"],
-});
+    // Account Information
+    username: z.string().min(4, "Username must be at least 4 characters"),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+      .regex(/[0-9]/, "Password must contain at least one number")
+      .regex(
+        /[^A-Za-z0-9]/,
+        "Password must contain at least one special character"
+      ),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
 
 type FormData = z.infer<typeof formSchema>;
 
 const steps = [
-  { title: 'Personal Info', component: PersonalInfo },
-  { title: 'Address Info', component: AddressInfo },
-  { title: 'Account Setup', component: AccountInfo },
+  { title: "Personal Info", component: PersonalInfo },
+  { title: "Address Info", component: AddressInfo },
+  { title: "Account Setup", component: AccountInfo },
 ];
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -20 },
-  transition: { duration: 0.3 }
+  transition: { duration: 0.3 },
 };
 
 export default function MultiStepForm() {
@@ -58,20 +65,20 @@ export default function MultiStepForm() {
 
   const methods = useForm<FormData>({
     resolver: zodResolver(formSchema),
-    mode: 'onChange',
+    mode: "onChange",
   });
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      console.log('Form submitted:', data);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      console.log("Form submitted:", data);
       // Reset form and show success message
       methods.reset();
       setCurrentStep(0);
     } catch (error) {
-      console.error('Submission error:', error);
+      console.error("Submission error:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -79,18 +86,20 @@ export default function MultiStepForm() {
 
   const nextStep = async () => {
     const fields = Object.keys(methods.getValues()) as (keyof FormData)[];
-    const currentFields = fields.filter(field => {
-      if (currentStep === 0) return ['name', 'email', 'dateOfBirth'].includes(field);
-      if (currentStep === 1) return ['addressLine1', 'city', 'state', 'zipCode'].includes(field);
-      return ['username', 'password', 'confirmPassword'].includes(field);
+    const currentFields = fields.filter((field) => {
+      if (currentStep === 0)
+        return ["name", "email", "dateOfBirth"].includes(field);
+      if (currentStep === 1)
+        return ["addressLine1", "city", "state", "zipCode"].includes(field);
+      return ["username", "password", "confirmPassword"].includes(field);
     });
 
     const isValid = await methods.trigger(currentFields);
-    if (isValid) setCurrentStep(prev => Math.min(prev + 1, steps.length - 1));
+    if (isValid) setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
   };
 
   const prevStep = () => {
-    setCurrentStep(prev => Math.max(prev - 1, 0));
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
   const progress = ((currentStep + 1) / steps.length) * 100;
@@ -109,10 +118,10 @@ export default function MultiStepForm() {
           </p>
         </div>
 
-        <StepIndicator 
-          steps={steps} 
-          currentStep={currentStep} 
-          progress={progress} 
+        <StepIndicator
+          steps={steps}
+          currentStep={currentStep}
+          progress={progress}
         />
 
         <Card className="p-6 md:p-8 shadow-lg bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
@@ -139,16 +148,12 @@ export default function MultiStepForm() {
               </Button>
 
               {currentStep === steps.length - 1 ? (
-                <Button 
-                  type="submit" 
-                  disabled={isSubmitting}
-                  className="w-28"
-                >
-                  {isSubmitting ? 'Submitting...' : 'Submit'}
+                <Button type="submit" disabled={isSubmitting} className="w-28">
+                  {isSubmitting ? "Submitting..." : "Submit"}
                 </Button>
               ) : (
-                <Button 
-                  type="button" 
+                <Button
+                  type="button"
                   onClick={nextStep}
                   disabled={isSubmitting}
                   className="w-28"
