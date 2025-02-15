@@ -117,7 +117,7 @@ export default function MultiStepForm() {
 
   return (
     <FormProvider {...methods}>
-      <div className="space-y-12">
+      <div className="space-y-16">
         <div className="text-center space-y-3">
           <h1 className="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
             Join Our Team
@@ -127,11 +127,13 @@ export default function MultiStepForm() {
           </p>
         </div>
 
-        <StepIndicator
-          steps={steps}
-          currentStep={currentStep}
-          progress={progress}
-        />
+        <div className="px-10">
+          <StepIndicator
+            steps={steps}
+            currentStep={currentStep}
+            progress={progress}
+          />
+        </div>
 
         <div className="relative backdrop-blur-2xl bg-white/20 dark:bg-black/5 border border-gray-200/50 dark:border-white/5 rounded-3xl p-8 md:p-10 shadow-xl">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 dark:from-purple-500/5 dark:via-transparent dark:to-blue-500/5 rounded-3xl" />
