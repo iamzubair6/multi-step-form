@@ -66,6 +66,24 @@ export default function MultiStepForm() {
   const methods = useForm<FormData>({
     resolver: zodResolver(formSchema),
     mode: "onChange",
+    defaultValues: {
+      // Personal Information
+      name: "",
+      email: "",
+      dateOfBirth: "",
+
+      // Address Information
+      addressLine1: "",
+      addressLine2: "",
+      city: "",
+      state: "",
+      zipCode: "",
+
+      // Account Information
+      username: "",
+      password: "",
+      confirmPassword: "",
+    },
   });
 
   const onSubmit = async (data: FormData) => {
@@ -102,7 +120,7 @@ export default function MultiStepForm() {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
-  const progress = ((currentStep + 1) / steps.length) * 100;
+  const progress = (currentStep / (steps.length - 1)) * 100;
 
   const CurrentStepComponent = steps[currentStep].component;
 
