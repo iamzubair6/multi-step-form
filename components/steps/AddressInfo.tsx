@@ -1,3 +1,4 @@
+import { states } from "@/constants/locations";
 import { motion } from "framer-motion";
 import { useFormContext } from "react-hook-form";
 import FormField from "../FormField";
@@ -8,59 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-
-const states = [
-  "Alabama",
-  "Alaska",
-  "Arizona",
-  "Arkansas",
-  "California",
-  "Colorado",
-  "Connecticut",
-  "Delaware",
-  "Florida",
-  "Georgia",
-  "Hawaii",
-  "Idaho",
-  "Illinois",
-  "Indiana",
-  "Iowa",
-  "Kansas",
-  "Kentucky",
-  "Louisiana",
-  "Maine",
-  "Maryland",
-  "Massachusetts",
-  "Michigan",
-  "Minnesota",
-  "Mississippi",
-  "Missouri",
-  "Montana",
-  "Nebraska",
-  "Nevada",
-  "New Hampshire",
-  "New Jersey",
-  "New Mexico",
-  "New York",
-  "North Carolina",
-  "North Dakota",
-  "Ohio",
-  "Oklahoma",
-  "Oregon",
-  "Pennsylvania",
-  "Rhode Island",
-  "South Carolina",
-  "South Dakota",
-  "Tennessee",
-  "Texas",
-  "Utah",
-  "Vermont",
-  "Virginia",
-  "Washington",
-  "West Virginia",
-  "Wisconsin",
-  "Wyoming",
-];
 
 export default function AddressInfo() {
   const { control } = useFormContext();
@@ -112,7 +60,7 @@ export default function AddressInfo() {
                 <SelectValue placeholder="Select your state" />
               </SelectTrigger>
               <SelectContent>
-                {states.map((state) => (
+                {states?.map((state) => (
                   <SelectItem key={state} value={state}>
                     {state}
                   </SelectItem>

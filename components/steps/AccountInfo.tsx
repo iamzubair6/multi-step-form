@@ -1,40 +1,20 @@
+import {
+  passwordRules,
+  validatePasswordRule,
+} from "@/utils/passwordValidation";
 import { motion } from "framer-motion";
 import { Check, Eye, EyeOff, X } from "lucide-react";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { FormData } from "../../schemas/formSchema";
 import FormField from "../FormField";
 
-const passwordRules = [
-  { id: 1, rule: "At least 8 characters" },
-  { id: 2, rule: "Contains uppercase letter" },
-  { id: 3, rule: "Contains lowercase letter" },
-  { id: 4, rule: "Contains number" },
-  { id: 5, rule: "Contains special character" },
-];
-
 export default function AccountInfo() {
-  const { control, watch } = useFormContext();
+  const { control, watch } = useFormContext<FormData>();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const password = watch("password", "");
-
-  const validatePasswordRule = (rule: string) => {
-    switch (rule) {
-      case "At least 8 characters":
-        return password.length >= 8;
-      case "Contains uppercase letter":
-        return /[A-Z]/.test(password);
-      case "Contains lowercase letter":
-        return /[a-z]/.test(password);
-      case "Contains number":
-        return /[0-9]/.test(password);
-      case "Contains special character":
-        return /[^A-Za-z0-9]/.test(password);
-      default:
-        return false;
-    }
-  };
 
   return (
     <div className="space-y-6">
@@ -86,7 +66,7 @@ export default function AccountInfo() {
           </p>
           <div className="space-y-2">
             {passwordRules.map(({ id, rule }) => {
-              const isValid = validatePasswordRule(rule);
+              const isValid = validatePasswordRule(password, rule);
               return (
                 <div key={id} className="flex items-center space-x-2 text-sm">
                   {isValid ? (
