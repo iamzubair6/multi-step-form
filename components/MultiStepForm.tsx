@@ -21,7 +21,13 @@ const formSchema = z
     addressLine2: z.string().optional(),
     city: z.string().min(1, "City is required"),
     state: z.string().min(1, "State is required"),
-    zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, "Invalid zip code"),
+    zipCode: z
+      .string()
+      .min(5, "ZIP code is required")
+      .regex(
+        /^\d{5}(-\d{4})?$/,
+        "ZIP code must be in format: 12345 or 12345-6789"
+      ),
 
     // Account Information
     username: z.string().min(4, "Username must be at least 4 characters"),
