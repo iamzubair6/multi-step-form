@@ -28,10 +28,8 @@ export default function MultiStepForm() {
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
-      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 2000));
       console.log("Form submitted:", data);
-      // Reset form and show success message
       methods.reset();
       setCurrentStep(0);
     } catch (error) {
@@ -52,16 +50,17 @@ export default function MultiStepForm() {
     });
 
     const isValid = await methods.trigger(currentFields);
-    if (isValid) setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1));
+    if (isValid)
+      setCurrentStep((prev) => Math.min(prev + 1, steps?.length - 1));
   };
 
   const prevStep = () => {
     setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
-  const progress = (currentStep / (steps.length - 1)) * 100;
+  const progress = (currentStep / (steps?.length - 1)) * 100;
 
-  const CurrentStepComponent = steps[currentStep].component;
+  const CurrentStepComponent = steps?.[currentStep]?.component;
 
   return (
     <FormProvider {...methods}>

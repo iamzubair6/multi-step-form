@@ -1,20 +1,6 @@
+import { pulseAnimationVariants } from "@/utils/pulseIndicator";
 import { motion } from "framer-motion";
 import { CheckIcon } from "lucide-react";
-
-const pulseAnimationVariants = {
-  initial: { opacity: 0, scale: 0.8 },
-  animate: (delay = 0) => ({
-    opacity: [0.25, 0],
-    scale: delay ? 1.3 : 1.5,
-    transition: {
-      duration: 2,
-      repeat: Infinity,
-      ease: "easeOut",
-      delay,
-      times: [0, 1],
-    },
-  }),
-};
 
 interface Step {
   title: string;
@@ -94,12 +80,12 @@ export default function StepIndicator({
                   <>
                     <motion.div
                       initial="initial"
-                      animate={pulseAnimationVariants.animate()}
+                      animate={pulseAnimationVariants?.animate()}
                       className="absolute inset-0 rounded-full bg-purple-500/20 dark:bg-purple-500/20"
                     />
                     <motion.div
                       initial="initial"
-                      animate={pulseAnimationVariants.animate(0.75)}
+                      animate={pulseAnimationVariants?.animate(0.75)}
                       className="absolute inset-0 rounded-full bg-purple-500/15 dark:bg-purple-500/15"
                     />
                   </>

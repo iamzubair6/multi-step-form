@@ -7,7 +7,7 @@ import { Check, Eye, EyeOff, X } from "lucide-react";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormData } from "../../schemas/formSchema";
-import FormField from "../FormField";
+import FormField from "../shared/FormField";
 
 export default function AccountInfo() {
   const { control, watch } = useFormContext<FormData>();

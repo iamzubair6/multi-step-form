@@ -1,7 +1,7 @@
 import { states } from "@/constants/locations";
 import { motion } from "framer-motion";
 import { useFormContext } from "react-hook-form";
-import FormField from "../FormField";
+import FormField from "../shared/FormField";
 import {
   Select,
   SelectContent,

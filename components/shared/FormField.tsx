@@ -1,7 +1,7 @@
 import { JSX, ReactNode } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 interface FormFieldProps {
   name: string;

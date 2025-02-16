@@ -1,8 +1,8 @@
-import { useFormContext, Controller } from "react-hook-form";
 import { motion } from "framer-motion";
+import { Controller, useFormContext } from "react-hook-form";
+import FormField from "../shared/FormField";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import FormField from "../FormField";
 
 export default function PersonalInfo() {
   const { control } = useFormContext();
