@@ -1,19 +1,16 @@
+import { accountFields } from "@/constants/formItems";
 import {
   passwordRules,
   validatePasswordRule,
 } from "@/utils/passwordValidation";
 import { motion } from "framer-motion";
-import { Check, Eye, EyeOff, X } from "lucide-react";
-import { useState } from "react";
+import { Check, X } from "lucide-react";
 import { useFormContext } from "react-hook-form";
 import { FormData } from "../../schemas/formSchema";
 import FormField from "../shared/FormField";
 
 export default function AccountInfo() {
-  const { control, watch } = useFormContext<FormData>();
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const { watch } = useFormContext<FormData>();
   const password = watch("password", "");
 
   return (
@@ -32,81 +29,39 @@ export default function AccountInfo() {
       </motion.div>
 
       <div className="space-y-4">
-        <FormField
-          control={control}
-          name="username"
-          label="Username"
-          placeholder="Choose a username"
-        />
+        {accountFields?.map((field) => (
+          <FormField key={field.name} field={field} />
+        ))}
 
-        <FormField
-          control={control}
-          name="password"
-          label="Password"
-          type={showPassword ? "text" : "password"}
-          placeholder="Enter your password"
-          rightIcon={
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="focus:outline-none"
-            >
-              {showPassword ? (
-                <EyeOff className="h-4 w-4 text-gray-500" />
-              ) : (
-                <Eye className="h-4 w-4 text-gray-500" />
-              )}
-            </button>
-          }
-        />
-
-        <div className="space-y-2">
-          <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-            Password Requirements:
-          </p>
+        {/* Password Requirements Section */}
+        {password && (
           <div className="space-y-2">
-            {passwordRules.map(({ id, rule }) => {
-              const isValid = validatePasswordRule(password, rule);
-              return (
-                <div key={id} className="flex items-center space-x-2 text-sm">
-                  {isValid ? (
-                    <Check className="h-4 w-4 text-green-500" />
-                  ) : (
-                    <X className="h-4 w-4 text-red-500" />
-                  )}
-                  <span
-                    className={`${
-                      isValid ? "text-green-600" : "text-red-600"
-                    } dark:text-gray-300`}
-                  >
-                    {rule}
-                  </span>
-                </div>
-              );
-            })}
+            <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              Password Requirements:
+            </p>
+            <div className="space-y-2">
+              {passwordRules.map(({ id, rule }) => {
+                const isValid = validatePasswordRule(password, rule);
+                return (
+                  <div key={id} className="flex items-center space-x-2 text-sm">
+                    {isValid ? (
+                      <Check className="h-4 w-4 text-green-500" />
+                    ) : (
+                      <X className="h-4 w-4 text-red-500" />
+                    )}
+                    <span
+                      className={`${
+                        isValid ? "text-green-600" : "text-red-600"
+                      } dark:text-gray-300`}
+                    >
+                      {rule}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-
-        <FormField
-          control={control}
-          name="confirmPassword"
-          label="Confirm Password"
-          type={showConfirmPassword ? "text" : "password"}
-          placeholder="Confirm your password"
-          rightIcon={
-            <button
-              type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="focus:outline-none"
-            >
-              {showConfirmPassword ? (
-                <EyeOff className="h-4 w-4 text-gray-500" />
-              ) : (
-                <Eye className="h-4 w-4 text-gray-500" />
-              )}
-            </button>
-          }
-        />
+        )}
       </div>
     </div>
   );

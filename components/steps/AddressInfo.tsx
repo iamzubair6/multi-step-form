@@ -1,18 +1,8 @@
-import { states } from "@/constants/locations";
+import { addressFields } from "@/constants/formItems";
 import { motion } from "framer-motion";
-import { useFormContext } from "react-hook-form";
 import FormField from "../shared/FormField";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 
 export default function AddressInfo() {
-  const { control } = useFormContext();
-
   return (
     <div className="space-y-6">
       <motion.div
@@ -29,53 +19,9 @@ export default function AddressInfo() {
       </motion.div>
 
       <div className="space-y-4">
-        <FormField
-          control={control}
-          name="addressLine1"
-          label="Address Line 1"
-          placeholder="Street address"
-        />
-
-        <FormField
-          control={control}
-          name="addressLine2"
-          label="Address Line 2 (Optional)"
-          placeholder="Apartment, suite, unit, etc."
-        />
-
-        <FormField
-          control={control}
-          name="city"
-          label="City"
-          placeholder="Enter your city"
-        />
-
-        <FormField
-          control={control}
-          name="state"
-          label="State"
-          render={({ field, fieldState: { error } }) => (
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
-              <SelectTrigger className={error ? "border-red-500" : ""}>
-                <SelectValue placeholder="Select your state" />
-              </SelectTrigger>
-              <SelectContent>
-                {states?.map((state) => (
-                  <SelectItem key={state} value={state}>
-                    {state}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          )}
-        />
-
-        <FormField
-          control={control}
-          name="zipCode"
-          label="ZIP Code"
-          placeholder="Enter your ZIP code"
-        />
+        {addressFields?.map((field) => (
+          <FormField key={field.name} field={field} />
+        ))}
       </div>
     </div>
   );

@@ -1,12 +1,8 @@
+import { personalInfoFields } from "@/constants/formItems";
 import { motion } from "framer-motion";
-import { Controller, useFormContext } from "react-hook-form";
 import FormField from "../shared/FormField";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
 
 export default function PersonalInfo() {
-  const { control } = useFormContext();
-
   return (
     <div className="space-y-6">
       <motion.div
@@ -23,41 +19,9 @@ export default function PersonalInfo() {
       </motion.div>
 
       <div className="space-y-4">
-        <FormField
-          control={control}
-          name="name"
-          label="Full Name"
-          placeholder="Enter your full name"
-        />
-
-        <FormField
-          control={control}
-          name="email"
-          label="Email Address"
-          placeholder="you@example.com"
-          type="email"
-        />
-
-        <div className="space-y-2">
-          <Label htmlFor="dateOfBirth">Date of Birth</Label>
-          <Controller
-            name="dateOfBirth"
-            control={control}
-            render={({ field, fieldState: { error } }) => (
-              <div>
-                <Input
-                  {...field}
-                  type="date"
-                  id="dateOfBirth"
-                  className={error ? "border-red-500" : ""}
-                />
-                {error && (
-                  <p className="mt-1 text-sm text-red-500">{error.message}</p>
-                )}
-              </div>
-            )}
-          />
-        </div>
+        {personalInfoFields?.map((field) => (
+          <FormField key={field?.name} field={field} />
+        ))}
       </div>
     </div>
   );
