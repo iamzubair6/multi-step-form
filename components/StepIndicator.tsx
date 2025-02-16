@@ -32,9 +32,9 @@ export default function StepIndicator({
   progress,
 }: StepIndicatorProps) {
   return (
-    <div className="relative">
+    <div className="relative px-0 sm:px-0">
       {/* Progress bar */}
-      <div className="absolute top-5 left-0 right-0 h-0.5 bg-gray-400 dark:bg-gray-700">
+      <div className="absolute top-3 sm:top-5 left-0 right-0 h-0.5 bg-gray-400 dark:bg-gray-700">
         <motion.div
           className="absolute left-0 top-0 h-full bg-gradient-to-r from-purple-500 to-blue-500"
           initial={{ width: 0 }}
@@ -44,7 +44,7 @@ export default function StepIndicator({
       </div>
 
       {/* Steps */}
-      <div className="relative flex justify-between">
+      <div className="relative flex justify-between max-w-full">
         {steps.map((step, index) => {
           const isCompleted = index < currentStep;
           const isCurrent = index === currentStep;
@@ -52,7 +52,7 @@ export default function StepIndicator({
           return (
             <div
               key={index}
-              className="flex flex-col items-center space-y-2 relative"
+              className="flex flex-col items-center space-y-1 sm:space-y-2"
             >
               {/* Step circle with smoother animations */}
               <motion.div
@@ -62,7 +62,7 @@ export default function StepIndicator({
                   transition: { type: "spring", stiffness: 300, damping: 25 },
                 }}
                 className={`
-                  relative z-10 w-10 h-10 rounded-full flex items-center justify-center
+                  relative z-10 w-6 h-6 sm:w-10 sm:h-10 rounded-full flex items-center justify-center
                   transition-all duration-300
                   ${
                     isCompleted
@@ -74,10 +74,10 @@ export default function StepIndicator({
                 `}
               >
                 {isCompleted ? (
-                  <CheckIcon className="w-5 h-5 text-white" />
+                  <CheckIcon className="w-3 h-3 sm:w-5 sm:h-5 text-white" />
                 ) : (
                   <span
-                    className={`text-sm font-semibold
+                    className={`text-xs sm:text-sm font-semibold
                     ${
                       isCurrent
                         ? "text-purple-500 dark:text-purple-400"
@@ -89,7 +89,7 @@ export default function StepIndicator({
                   </span>
                 )}
 
-                {/* Smoother pulse animation for current step */}
+                {/* Pulse animations */}
                 {isCurrent && (
                   <>
                     <motion.div
@@ -116,7 +116,7 @@ export default function StepIndicator({
                     ? "rgb(34, 197, 94)"
                     : "",
                 }}
-                className={`block text-sm font-medium transition-colors duration-200
+                className={`absolute top-[100%] whitespace-nowrap block text-[10px] sm:text-sm font-medium transition-colors duration-200 text-center
                   ${
                     isCurrent
                       ? "text-purple-600 dark:text-purple-400"

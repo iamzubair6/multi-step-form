@@ -75,7 +75,7 @@ export default function MultiStepForm() {
           </p>
         </div>
 
-        <div className="px-10">
+        <div className="px-10 pb-10 md:pb-0">
           <StepIndicator
             steps={steps}
             currentStep={currentStep}
@@ -84,8 +84,8 @@ export default function MultiStepForm() {
         </div>
 
         <div className="relative backdrop-blur-2xl bg-white/20 dark:bg-black/5 border border-gray-200/50 dark:border-white/5 rounded-3xl p-6 md:p-10 shadow-xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 dark:from-purple-500/5 dark:via-transparent dark:to-blue-500/5 rounded-3xl" />
-          <div className="absolute inset-0 bg-white/40 dark:bg-black/0 backdrop-blur-xl rounded-3xl" />
+          {/* <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 dark:from-purple-500/5 dark:via-transparent dark:to-blue-500/5 rounded-3xl" />
+          <div className="absolute inset-0 bg-white/40 dark:bg-black/0 backdrop-blur-xl rounded-3xl" /> */}
           <form
             onSubmit={methods.handleSubmit(onSubmit)}
             className="space-y-10 relative"
